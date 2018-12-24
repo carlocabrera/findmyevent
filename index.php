@@ -29,14 +29,14 @@
 </div>
 </div>
 <h3></h3>
-<small>To see example with events navigate to Februray 2018</small>
+<h1>Find My Event</h1>
 </div>
 <div class="row">
 <div class="col-md-9">
 <div id="showEventCalendar"></div>
 </div>
 <div class="col-md-3">
-<h4>All Events List</h4>
+<h4>Events List</h4>
 <ul id="eventlist" class="nav nav-list"></ul>
 </div>
 </div>
