@@ -1,33 +1,120 @@
-<div id="home">
-  <div class="container">
-    <div class="row">
-      <div class="col-8 offset-2">
-        <h1>{{msg}}</h1>
-        <h2>This is our Home Page!</h2>
-        <form class="clearfix mb-4" action="POST">
-          <div class="form-group">
-            <label for="example-text">Example Text</label>
-            <input type="text" id="example-text" class="form-control" aria-describedby="example-text" placeholder="Enter Example Text">
-          </div>
-          <div class="form-group">
-            <label for="example-description">Example Description</label>
-            <textarea class="form-control" id="example-description" aria-describedby="example-description" placeholder="Enter Example Description"></textarea>
-          </div>
-          <button id="submit" class="btn btn-primary float-right">Submit</button>
-        </form>
-        <h3>Examples:</h3>
-        <ul id="example-list" class="list-group">
-          {{#each examples}}
-          <li data-id="{{this.id}}" class="list-group-item">
-            <a href="example/{{this.id}}">{{this.text}}</a>
-            <button class="btn btn-danger float-right delete">ｘ</button>
-          </li>
-          {{/each}}
-        </ul>
-      </div>
-    </div>
+{{!-- Styles for Calendar --}}
+<style>
+ body {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 14px;
+  font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+  }
+ #calendar {
+  width: 650px;
+  margin: 0 auto;
+  }
+</style>
+
+{{!-- These are the scripts --}}
+<script>
+ $(document).ready(function() {
+  var date = new Date();
+  var d = date.getDate();
+  var m = date.getMonth();
+  var y = date.getFullYear();
+  var calendar = $('#calendar').fullCalendar({
+   editable: true,
+   header: {
+    left: 'prev,next today',
+    center: 'title',
+    right: 'month,agendaWeek,agendaDay'
+   },
+
+
+   events: "events.php",
+
+   eventRender: function(event, element, view) {
+    if (event.allDay === 'true') {
+     event.allDay = true;
+    } else {
+     event.allDay = false;
+    }
+   },
+   selectable: true,
+   selectHelper: true,
+   select: function(start, end, allDay) {
+   var title = prompt('Event Title:');
+
+   if (title) {
+   var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+   var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+   $.ajax({
+	   url: '/api/event',
+	   data: 'title='+ title+'&start='+ start +'&end='+ end,
+	   type: "POST",
+	   success: function(json) {
+	   alert('Added Successfully');
+	   }
+   });
+   calendar.fullCalendar('renderEvent',
+   {
+	   title: title,
+	   start: start,
+	   end: end,
+	   allDay: allDay
+   },
+   true
+   );
+   }
+   calendar.fullCalendar('unselect');
+   },
+
+
+   editable: true,
+   eventDrop: function(event, delta) {
+   var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+   var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+   $.ajax({
+	   url: 'update_events.php',
+	   data: 'title='+ event.title+'&start='+ start +'&end='+ end +'&id='+ event.id ,
+	   type: "POST",
+	   success: function(json) {
+	    alert("Updated Successfully");
+	   }
+   });
+   },
+   eventClick: function(event) {
+	var decision = confirm("Do you really want to do that?"); 
+	if (decision) {
+	$.ajax({
+		type: "POST",
+		url: "delete_event.php",
+		data: "&id=" + event.id,
+		 success: function(json) {
+			 $('#calendar').fullCalendar('removeEvents', event.id);
+			  alert("Updated Successfully");}
+	});
+	}
+  	},
+   eventResize: function(event) {
+	   var start = $.fullCalendar.formatDate(event.start, "yyyy-MM-dd HH:mm:ss");
+	   var end = $.fullCalendar.formatDate(event.end, "yyyy-MM-dd HH:mm:ss");
+	   $.ajax({
+	    url: 'update_events.php',
+	    data: 'title='+ event.title+'&start='+ start +'&end='+ end +'&id='+ event.id ,
+	    type: "POST",
+	    success: function(json) {
+	     alert("Updated Successfully");
+	    }
+	   });
+	}
+   
+  });
+  
+ });
+</script>
+
+<div class="container">
+  <div class="jumbotron">
+    <h1>Find My Event</h1>  
   </div>
 </div>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/js/index.js"></script>
+ <br/>
+ <div id='calendar'></div>
