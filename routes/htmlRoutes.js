@@ -13,9 +13,18 @@ module.exports = function(app) {
 
   // Load example page and pass in an example by id
   app.get("/example/:id", function(req, res) {
-    db.Example.findOne({ where: { id: req.params.id } }).then(function(dbevents) {
+    db.Events.findOne({ where: { id: req.params.id } }).then(function(dbevents) {
       res.render("example", {
         example: dbevents
+      });
+    });
+  });
+
+  // Load example page
+  app.get("/example", function(req, res) {
+    db.Events.findAll({}).then(function(dbevents) {
+      res.render("example", {
+        examples: dbevents
       });
     });
   });

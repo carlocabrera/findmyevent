@@ -20,7 +20,7 @@ module.exports = function(app) {
 
   // Delete an event by id
   app.delete("/models/events/:id", function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(dbevents) {
+    db.Events.destroy({ where: { id: req.params.id } }).then(function(dbevents) {
       res.json(dbevents);
     });
   });
