@@ -1,24 +1,27 @@
 var db = require("../models");
 
 module.exports = function(app) {
-  // Get all examples
+  // Get all events
   app.get("/api/events", function(req, res) {
-    db.Event.findAll({}).then(function(dbExamples) {
-      res.json(dbExamples);
+    db.Events.findAll({}).then(function(dbevents) {
+      res.json(dbevents);
     });
   });
 
-  // Create a new example
-  app.post("/api/event", function(req, res) {
-    db.Event.create(req.body).then(function(dbExample) {
-      res.json(dbExample);
+  // Create a new event
+  app.post("/api/events", function(req, res) {
+    //Test the route for the data
+    console.log(req.body);
+    //Insert into the database
+    db.Events.create(req.body).then(function(dbevents) {
+      res.json(dbevents);
     });
   });
 
-  // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.json(dbExample);
+  // Delete an event by id
+  app.delete("/models/events/:id", function(req, res) {
+    db.Example.destroy({ where: { id: req.params.id } }).then(function(dbevents) {
+      res.json(dbevents);
     });
   });
 };

@@ -46,10 +46,12 @@
    var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
    var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
    $.ajax({
-	   url: '/api/event',
+	   url: '/api/events',
 	   data: 'title='+ title+'&start='+ start +'&end='+ end,
 	   type: "POST",
 	   success: function(json) {
+       //See what comes back from the route
+       console.log(json);
 	   alert('Added Successfully');
 	   }
    });
