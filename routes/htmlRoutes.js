@@ -1,6 +1,17 @@
 var db = require("../models");
 
 module.exports = function(app) {
+
+
+  // load home page
+  app.get("/intro", function(req, res) {
+    res.render("intro", {
+        msg: "Intro",
+
+    });
+  });
+
+
   // Load index page
   app.get("/", function(req, res) {
     db.Events.findAll({}).then(function(dbevents) {
@@ -11,14 +22,6 @@ module.exports = function(app) {
     });
   });
 
-  // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
-    db.Example.findOne({ where: { id: req.params.id } }).then(function(dbevents) {
-      res.render("example", {
-        example: dbevents
-      });
-    });
-  });
 
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
