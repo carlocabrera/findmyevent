@@ -1,16 +1,18 @@
 {{!-- Styles for Calendar --}}
 <style>
-  .navbar {
+  .navbar{
     background: #F97300;
   }
   .nav-link , .navbar-brand{ 
-    color: #f4f4f4; cursor: pointer;
+    color: #f4f4f4; 
+    cursor: pointer;
     }
   .nav-link{ 
     margin-right: 1em !important;
   }
   .nav-link:hover{ 
-    background: #f4f4f4; color: #f97300; 
+    background: #f4f4f4; 
+    color: #f97300; 
   }
   .navbar-collapse{ 
     justify-content: flex-end;
@@ -18,27 +20,56 @@
   .navbar-toggler{  
     background:#fff !important;
   }
-  .header {
+  .header{
+    background-image: url('../images/orlando.jpg');
     background-attachment: fixed;
     background-size: cover;
     background-position: center; 
   }
-  .body {
+  .overlay{
+    position: absolute;
+    min-height: 100%;
+    min-width: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(244, 244, 244, 0.79);
+  }
+  .description{
+    position: absolute;
+    top: 30%;
+    margin: auto;
+    padding: 2em;
+  }
+  .description h1{
+    color: #F97300;
+  }
+  .description p{
+    color: #666;
+    font-size: 20px;
+    width: 50;
+    line-height: 1.5;
+  }
+  .description button{
+    border: 1px solid #F97300;
+    background: #F97300;
+    color:#fff;
+  }
+  .body{
     margin-top: 40px;
     text-align: center;
     font-size: 14px;
     font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
   }
-  #calendar {
+  #calendar{
     width: 650px;
     margin: 0 auto;
     background-color: #36454f;
   }
 
-  .footer {
+  .footer{
     
   }
-  #team {
+  #team{
 
   }
 </style>
@@ -169,10 +200,18 @@
   </div>
 </nav>
 
-<div class="container">
-  <div class="jumbotron">
-    <h1>Find My Event</h1>
+<header class="header">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="description ">
+      <h1>Hello, Welcome to EventMe!</h1>
+      <p>Finding something to do has never been easier</p>
+      <button class="btn btn-outline-secondary btn-lg">Start Here</button>
+    </div>
   </div>
-</div>
-<br />
+</header>
+
+
+<br>
 <div id='calendar'></div>
+</br>

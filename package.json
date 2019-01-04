@@ -15,8 +15,10 @@
     "express": "^4.16.4",
     "express-handlebars": "^3.0.0",
     "handlebars": "^4.0.12",
+    "mysql": "^2.16.0",
     "mysql2": "^1.5.3",
     "nodeman": "^1.1.2",
+    "nodemon": "^1.18.9",
     "sequelize": "^4.38.0"
   },
   "devDependencies": {
