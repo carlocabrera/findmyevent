@@ -65,12 +65,21 @@
     margin: 0 auto;
     background-color: #36454f;
   }
-
-  .footer{
-    
+  .team{
+    margin: 4em 0;
+    position: relative;
+    color: #F97300;
+    margin: 2em;
   }
-  #team{
-
+  .team .item{
+    position: relative;
+  }
+  .team .des{
+    background: #F97300;
+    color: #fff;
+    text-align: center;
+    border-bottom-left-radius: 93%;
+    transition: .3s ease-in-out;
   }
 </style>
 
@@ -203,7 +212,7 @@
 <header class="header">
   <div class="overlay"></div>
   <div class="container">
-    <div class="description ">
+    <div class="description">
       <h1>Hello, Welcome to EventMe!</h1>
       <p>Finding something to do has never been easier</p>
       <button class="btn btn-outline-secondary btn-lg">Start Here</button>
@@ -211,7 +220,14 @@
   </div>
 </header>
 
+<div class="row">
+    <div id='calendar'></div>
+    <span class="text-justify">Calendar</span>
+  </div>
+</div>
 
-<br>
-<div id='calendar'></div>
-</br>
+<div class="team">
+  <div class="container">
+    
+  </div>
+</div>
