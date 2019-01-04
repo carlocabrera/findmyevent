@@ -1,73 +1,187 @@
 {{!-- Styles for Calendar --}}
 <style>
- body {
-  margin-top: 40px;
-  text-align: center;
-  font-size: 14px;
-  font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+  .navbar{
+    background: #F97300;
   }
- #calendar {
-  width: 650px;
-  margin: 0 auto;
+  .nav-link , .navbar-brand{ 
+    color: #f4f4f4; 
+    cursor: pointer;
+    }
+  .nav-link{ 
+    margin-right: 1em !important;
+  }
+  .nav-link:hover{ 
+    background: #f4f4f4; 
+    color: #f97300; 
+  }
+  .navbar-collapse{ 
+    justify-content: flex-end;
+  }
+  .navbar-toggler{  
+    background:#fff !important;
+  }
+  .header{
+    background-image: url('../images/orlando.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center; 
+  }
+  .overlay{
+    position: absolute;
+    min-height: 100%;
+    min-width: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(244, 244, 244, 0.79);
+  }
+  .description{
+    position: absolute;
+    top: 30%;
+    margin: auto;
+    padding: 2em;
+  }
+  .description h1{
+    color: #F97300;
+  }
+  .description p{
+    color: #666;
+    font-size: 20px;
+    width: 50;
+    line-height: 1.5;
+  }
+  .description button{
+    border: 1px solid #F97300;
+    background: #F97300;
+    color:#fff;
+  }
+  .body{
+    margin-top: 40px;
+    text-align: center;
+    font-size: 14px;
+    font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
+  }
+  #calendar{
+    width: 650px;
+    margin: 0 auto;
+    background-color: #36454f;
+  }
+  .team{
+    margin: 4em 0;
+    position: relative;
+    color: #F97300;
+    margin: 2em;
+  }
+  .team .item{
+    position: relative;
+  }
+  .team .des{
+    background: #F97300;
+    color: #fff;
+    text-align: center;
+    border-bottom-left-radius: 93%;
+    transition: .3s ease-in-out;
   }
 </style>
 
 {{!-- These are the scripts --}}
 <script>
- $(document).ready(function() {
-  var date = new Date();
-  var d = date.getDate();
-  var m = date.getMonth();
-  var y = date.getFullYear();
-  var calendar = $('#calendar').fullCalendar({
-   editable: true,
-   header: {
-    left: 'prev,next today',
-    center: 'title',
-    right: 'month,agendaWeek,agendaDay'
-   },
+  $(document).ready(function () {
+    var date = new Date();
+    var d = date.getDate();
+    var m = date.getMonth();
+    var y = date.getFullYear();
+    var calendar = $('#calendar').fullCalendar({
+      editable: true,
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
 
 
-   events: "events.php",
+      events: "events.php",
 
-   eventRender: function(event, element, view) {
-    if (event.allDay === 'true') {
-     event.allDay = true;
-    } else {
-     event.allDay = false;
-    }
-   },
-   selectable: true,
-   selectHelper: true,
-   select: function(start, end, allDay) {
-   var title = prompt('Event Title:');
+      eventRender: function (event, element, view) {
+        if (event.allDay === 'true') {
+          event.allDay = true;
+        } else {
+          event.allDay = false;
+        }
+      },
+      selectable: true,
+      selectHelper: true,
+      select: function (start, end, allDay) {
+        var title = prompt('Event Title:');
 
-   if (title) {
-   var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-   var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-   $.ajax({
-	   url: '/api/events',
-	   data: 'title='+ title+'&start='+ start +'&end='+ end,
-	   type: "POST",
-	   success: function(json) {
-       //See what comes back from the route
-       console.log(json);
-	   alert('Added Successfully');
-	   }
-   });
-   calendar.fullCalendar('renderEvent',
-   {
-	   title: title,
-	   start: start,
-	   end: end,
-	   allDay: allDay
-   },
-   true
-   );
-   }
-   calendar.fullCalendar('unselect');
-   },
+        if (title) {
+          var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+          var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+          $.ajax({
+            url: '/api/events',
+            data: 'title=' + title + '&start=' + start + '&end=' + end,
+            type: "POST",
+            success: function (json) {
+              //See what comes back from the route
+              console.log(json);
+              alert('Added Successfully');
+            }
+          });
+          calendar.fullCalendar('renderEvent',
+            {
+              title: title,
+              start: start,
+              end: end,
+              allDay: allDay
+            },
+            true
+          );
+        }
+        calendar.fullCalendar('unselect');
+      },
 
+
+
+      editable: true,
+      eventDrop: function (event, delta) {
+        var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+        var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+        $.ajax({
+          url: 'update_events.php',
+          data: 'title=' + event.title + '&start=' + start + '&end=' + end + '&id=' + event.id,
+          type: "POST",
+          success: function (json) {
+            alert("Updated Successfully");
+          }
+        });
+      },
+      eventClick: function (event) {
+        var decision = confirm("Do you really want to do that?");
+        if (decision) {
+          $.ajax({
+            type: "POST",
+            url: "delete_event.php",
+            data: "&id=" + event.id,
+            success: function (json) {
+              $('#calendar').fullCalendar('removeEvents', event.id);
+              alert("Updated Successfully");
+            }
+          });
+        }
+      },
+      eventResize: function (event) {
+        var start = $.fullCalendar.formatDate(event.start, "yyyy-MM-dd HH:mm:ss");
+        var end = $.fullCalendar.formatDate(event.end, "yyyy-MM-dd HH:mm:ss");
+        $.ajax({
+          url: 'update_events.php',
+          data: 'title=' + event.title + '&start=' + start + '&end=' + end + '&id=' + event.id,
+          type: "POST",
+          success: function (json) {
+            alert("Updated Successfully");
+          }
+        });
+      }
+
+    });
 
    editable: true,
    eventDrop: function(event, delta) {
@@ -109,9 +223,55 @@
 	}
    
   });
-  
- });
 </script>
+
+
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg fixed-top ">
+  <a class="navbar-brand" href="#">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse " id="navbarSupportedContent">
+    <ul class="navbar-nav mr-4">
+      <li class="nav-item">
+        <a class="nav-link" data-value="about" href="#">About</a> </li>
+      <li class="nav-item">
+        <a class="nav-link " data-value="portfolio" href="#">Portfolio</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " data-value="blog" href="#">Blog</a> </li>
+      <li class="nav-item">
+        <a class="nav-link " data-value="team" href="#"> Team</a> </li>
+      <li class="nav-item">
+        <a class="nav-link " data-value="contact" href="#">Contact</a> </li>
+    </ul>
+  </div>
+</nav>
+
+<header class="header">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="description">
+      <h1>Hello, Welcome to EventMe!</h1>
+      <p>Finding something to do has never been easier</p>
+      <button class="btn btn-outline-secondary btn-lg">Start Here</button>
+    </div>
+  </div>
+</header>
+
+<div class="row">
+    <div id='calendar'></div>
+    <span class="text-justify">Calendar</span>
+  </div>
+</div>
+
+<div class="team">
+  <div class="container">
+    
+  </div>
+</div>
 
 <div class="container">
   <div class="jumbotron">
@@ -125,3 +285,4 @@
   WHETHER ITS CONCERTS, BAR OPENING, OR EVEN AS LITTLE AS A BIRTHDAY PARTY. 
   COME JOIN US IN MAKING FIND MY EVENT HUGE!!!!
   </p>
+
