@@ -83,7 +83,7 @@
    });
    },
    eventClick: function(event) {
-	var decision = confirm("Do you really want to do delete that?"); 
+	var decision = confirm("Do you really want to do that?"); 
 	if (decision) {
 	$.ajax({
 		type: "POST",
@@ -115,13 +115,8 @@
 
 <div class="container">
   <div class="jumbotron">
-    <h1>Welcome to Find My Event!!</h1>  
+    <h1>Find My Event</h1>  
   </div>
 </div>
  <br/>
- <p>
-   GLAD YOU COULD JOIN US! THIS WEBSITE WILL HELP SOLVE ALL YOUR NEEDS IN PLANNING A LOCAL EVENT.
-  ITS NICE AND EASY AND LETS PEOPLE KNOW WHAT EVENTS ARE GOING ON AROUND THEM. 
-  WHETHER ITS CONCERTS, BAR OPENING, OR EVEN AS LITTLE AS A BIRTHDAY PARTY. 
-  COME JOIN US IN MAKING FIND MY EVENT HUGE!!!!
-  </p>
+ <div id='calendar'></div>
