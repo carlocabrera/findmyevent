@@ -3,9 +3,9 @@ var db = require("../models");
 module.exports = function(app) {
 
   // load home page
-  app.get("/Intro", function(req, res) {
-    res.render("Intro", {
-        msg: "Intro",
+  app.get("/intro", function(req, res) {
+    res.render("intro", {
+        msg: "intro",
       });
     });
 
