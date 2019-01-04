@@ -3,8 +3,12 @@ var db = require("../models");
 module.exports = function(app) {
 
   // load home page
-  app.get("/intro", function(req, res) {
-    res.render("intro", {
+
+  app.get("/", function(req, res) {
+    res.render("index", {
+
+  app.get("/events", function(req, res) {
+    res.render("events", {
         msg: "intro",
       });
     });
