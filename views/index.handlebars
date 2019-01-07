@@ -139,6 +139,7 @@
       },
 
 
+
       editable: true,
       eventDrop: function (event, delta) {
         var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
@@ -181,8 +182,48 @@
 
     });
 
+   editable: true,
+   eventDrop: function(event, delta) {
+   var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+   var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+   $.ajax({
+	   url: 'update_events.php',
+	   data: 'title='+ event.title+'&start='+ start +'&end='+ end +'&id='+ event.id ,
+	   type: "POST",
+	   success: function(json) {
+	    alert("Updated Successfully");
+	   }
+   });
+   },
+   eventClick: function(event) {
+	var decision = confirm("Do you really want to do delete that?"); 
+	if (decision) {
+	$.ajax({
+		type: "POST",
+		url: "delete_event.php",
+		data: "&id=" + event.id,
+		 success: function(json) {
+			 $('#calendar').fullCalendar('removeEvents', event.id);
+			  alert("Updated Successfully");}
+	});
+	}
+  	},
+   eventResize: function(event) {
+	   var start = $.fullCalendar.formatDate(event.start, "yyyy-MM-dd HH:mm:ss");
+	   var end = $.fullCalendar.formatDate(event.end, "yyyy-MM-dd HH:mm:ss");
+	   $.ajax({
+	    url: 'update_events.php',
+	    data: 'title='+ event.title+'&start='+ start +'&end='+ end +'&id='+ event.id ,
+	    type: "POST",
+	    success: function(json) {
+	     alert("Updated Successfully");
+	    }
+	   });
+	}
+   
   });
 </script>
+
 
 <!-- navbar -->
 <nav class="navbar navbar-expand-lg fixed-top ">
@@ -254,4 +295,5 @@
     </div>
   </div>
 </div>
-</div>
+
+
