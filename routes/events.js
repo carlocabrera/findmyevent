@@ -7,37 +7,30 @@ const Event = require('../models/Event');
 router.get('/', (req, res) =>
     Event.findAll()
         .then(events => {
-            console.log(events);
-            res.sendStatus(200);
+            res.render('events', {
+                events
+            });
         })
         .catch(err => console.log(err)));
 
+// Display add gig form
+router.get('/add', (req, res) => res.render('add'))
 
 // Adde Event Test
 
-router.get('/add', (req, res) => {
-    const data = {
-        title: 'title test',
-        notes: 'notes test',
-        details: 'details test',
-        description: 'Description test',
-        contact_email: 'testing email'
-    }
+router.post('/add', (req, res) => {
+    let { title, notes, details, description, contact_email } = req.body;
 
-    let { title, notes, details, description, contact_email } = data;
-
-// Insert Into Table
-Event.create({
-title,
-notes,
-details,
-description,
-contact_email
-})
-.then(gig => res.redirect('events'))
-.catch(err => console.log(err));
-
-
+    // Insert Into Table
+    Event.create({
+        title,
+        notes,
+        details,
+        description,
+        contact_email
+    })
+        .then(gig => res.redirect('events'))
+        .catch(err => console.log(err));
 })
 
 module.exports = router;

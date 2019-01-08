@@ -13,7 +13,17 @@ db.authenticate()
 
 const app = express();
 
-app.get('/', (req, res) => res.send('INDEX'));
+// Handlebars
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
+app.use(bodyParser.urlencoded({extended: false}));
+
+// set static folder
+app.use(express.static(path.join(__dirname, 'public')))
+
+// Index Route
+app.get('/', (req, res) => res.render('index', {layout: 'landing'}));
 
 // Event Routes
 app.use('/events', require('./routes/events'));
