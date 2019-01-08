@@ -14,7 +14,10 @@ const Event = db.define('event', {
     description: {
         type: Sequelize.STRING
     },
+   
     contact_email: {
         type: Sequelize.STRING
     },
 })
+
+module.exports = Event;
