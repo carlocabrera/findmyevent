@@ -1,34 +1,25 @@
 {
   "name": "findmyevent",
   "version": "1.0.0",
-  "description": "Event Organizing Application",
+  "description": "Node, Express, Sequelize and Handlebars Event Organizing Application",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/carlocabrera/findmyevent.git"
-  },
   "keywords": [
-    "handlebars.js",
+    "node",
+    "express",
     "sequelize",
-    "node.js",
-    "express.js"
+    "handlebars"
   ],
   "author": "CARLO.CODES",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/carlocabrera/findmyevent/issues"
-  },
-  "homepage": "https://github.com/carlocabrera/findmyevent#readme",
+  "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "express-handlebars": "^3.0.0",
-    "pg": "^7.7.1",
-    "pg-hstore": "^2.3.2",
+    "mysql2": "^1.6.4",
     "sequelize": "^4.42.0"
   },
   "devDependencies": {

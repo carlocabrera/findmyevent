@@ -1,7 +1,9 @@
-# FindMyEvent 3.0
-# Event Organizing Application
+# FindMyEvent
+Node, Express, Sequelize and Handlebars Event Organizing Application
 
-# Tech:
+Link:
+
+# Tech
 Node and Express Web Server
 
 MySQL Database with a Sequelize ORM
@@ -17,3 +19,5 @@ MVC Paradigm folder structure
 Higest quality coding standards
 
 Protected sensitive API key information
+
+# Demo

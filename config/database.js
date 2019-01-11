@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 
-module.exports = new Sequelize('findmyevent', 'postgres', '5C5Y*Dffk#', {
+module.exports =  new Sequelize('findmyevent', 'root', 'root', {
   host: 'localhost',
-  dialect: 'postgres',
+  dialect: 'mysql',
   operatorsAliases: false,
 
   pool: {
